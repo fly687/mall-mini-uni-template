@@ -1,0 +1,191 @@
+
+@font-face{
+	font-family : "zsl-iconfont"; 
+	font-weight : normal; 
+	font-style  : normal; 
+	src         : url('https://at.alicdn.com/t/font_1607054_yazbdgl11yh.ttf') format('truetype');
+}
+.zsl-icons{font-family:"zsl-iconfont" !important; font-style:normal;}
+
+.icon-arrow-right-red:before{content:"\e616";}
+.icon-arrow-right-wide:before{content:"\e6a8";}
+
+
+
+
+
+.icon-jiantouarrow484:before {
+  content: "\e6a8";
+}
+
+.icon-huo:before {
+  content: "\e66c";
+}
+
+.icon-zuzhijiagou:before {
+  content: "\e617";
+}
+
+.icon-zuzhi:before {
+  content: "\e672";
+}
+
+.icon-shengxian-shuiguo:before {
+  content: "\e604";
+}
+
+.icon-shuiguopingguo:before {
+  content: "\e609";
+}
+
+.icon-shuiguo:before {
+  content: "\e6ad";
+}
+
+.icon-jiantou:before {
+  content: "\e616";
+}
+
+.icon-huaban:before {
+  content: "\e69c";
+}
+
+.icon-video-:before {
+  content: "\e614";
+}
+
+.icon-suodeshuihuisuanjiaoqing:before {
+  content: "\e62e";
+}
+
+.icon-yiwenwenhaoduihuakuangjiedaxianxing:before {
+  content: "\e62f";
+}
+
+.icon-gengduo:before {
+  content: "\e630";
+}
+
+.icon-geshuishezhi:before {
+  content: "\e631";
+}
+
+.icon-nashuichouhuayouhua:before {
+  content: "\e632";
+}
+
+.icon-daichulirenwu:before {
+  content: "\e600";
+}
+
+.icon-fujinyinhang:before {
+  content: "\e637";
+}
+
+.icon-huatong:before {
+  content: "\e607";
+}
+
+.icon-zuanshi:before {
+  content: "\e60c";
+}
+
+.icon-mod:before {
+  content: "\e643";
+}
+
+.icon-reg:before {
+  content: "\e653";
+}
+
+.icon-sketch:before {
+  content: "\e658";
+}
+
+.icon-aze:before {
+  content: "\e693";
+}
+
+.icon-laba:before {
+  content: "\e610";
+}
+
+.icon-haoping:before {
+  content: "\e611";
+}
+
+.icon-aixin:before {
+  content: "\e612";
+}
+
+.icon-zhongbiao:before {
+  content: "\e613";
+}
+
+.icon-xinzeng:before {
+  content: "\e618";
+}
+
+.icon-check:before {
+  content: "\e677";
+}
+
+.icon-close-circle:before {
+  content: "\e678";
+}
+
+.icon-delete:before {
+  content: "\e679";
+}
+
+.icon-down:before {
+  content: "\e67a";
+}
+
+.icon-exclamation-circle:before {
+  content: "\e67b";
+}
+
+.icon-edit:before {
+  content: "\e67c";
+}
+
+.icon-heart:before {
+  content: "\e67d";
+}
+
+.icon-list:before {
+  content: "\e67e";
+}
+
+.icon-global:before {
+  content: "\e67f";
+}
+
+.icon-left:before {
+  content: "\e680";
+}
+
+.icon-minus-circle:before {
+  content: "\e681";
+}
+
+.icon-maximize:before {
+  content: "\e682";
+}
+
+.icon-menu-fold:before {
+  content: "\e683";
+}
+
+.icon-redo:before {
+  content: "\e684";
+}
+
+.icon-right:before {
+  content: "\e685";
+}
+
+.icon-up:before {
+  content: "\e688";
+}

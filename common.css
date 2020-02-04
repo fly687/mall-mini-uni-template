@@ -1,0 +1,12 @@
+/* 自定义通用样式 , 根据项目需求自行编写 */
+
+navigator{opacity:1; background:none;}
+.navigator-hover{background:none; opacity:0.8;}
+
+/* 通用线条 */
+.common-line{width:100%; height:20rpx; background:#F4F5F6;}
+/* 产品列表个性修饰 */
+.grace-img-card .item{background:#FFF; padding:6px; box-sizing:border-box; border-radius:5px;}
+.grace-img-card .title{font-size:12px; line-height:22px; height:auto;}
+.grace-img-card .more{justify-content:flex-start; margin-top:3px;}
+.grace-img-card .more .del{text-decoration:line-through; color:#D1D1D1; margin:0 5px; font-size:10px;}

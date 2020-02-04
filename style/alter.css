@@ -1,0 +1,17 @@
+.zsl-alter {
+	background:#F5F6F8; color:#000000d9; padding: 10px;  font-size:14px; line-height: 24px; margin: 10px 5px; border-radius: 4px;
+}
+.zsl-alter-success {
+	border:1px #b7eb8f solid; background:#f6ffed;
+}
+
+.zsl-alter-info {
+	border:1px #91d5ff solid; background:#e6f7ff;
+}
+
+.zsl-alter-warn {
+	border:1px #ffe58f solid; background:#fffbe6;
+}
+.zsl-alter-error {
+	border:1px #ffa39e solid; background:#fff1f0;
+}

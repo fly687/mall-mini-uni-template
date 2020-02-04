@@ -1,0 +1,171 @@
+{
+	"tabBar" : {
+	    "color" : "#999999",
+	    "selectedColor" : "#FF0036",
+	    "list" : [
+	        {
+	            "pagePath" : "pages/index/index",
+	            "text" : "商城",
+	            "iconPath" : "static/mall.png",
+	            "selectedIconPath" : "static/mall-a.png"
+	        },
+	        {
+	            "pagePath" : "pages/news/news",
+	            "text" : "资讯",
+	            "iconPath" : "static/news.png",
+	            "selectedIconPath" : "static/news-a.png"
+	        },
+	        {
+	            "pagePath" : "pages/shoppingBasket/list",
+	            "text" : "购物车",
+	            "iconPath" : "static/scart.png",
+	            "selectedIconPath" : "static/scart-a.png"
+	        },
+			{
+			    "pagePath" : "pages/my/my",
+			    "text" : "我的",
+			    "iconPath" : "static/my.png",
+			    "selectedIconPath" : "static/my-a.png"
+			},
+			{
+			    "pagePath" : "pages/test/test",
+			    "text" : "测试",
+			    "iconPath" : "static/my.png",
+			    "selectedIconPath" : "static/my-a.png"
+			}
+	    ]
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"titleNView" : false,
+				"navigationStyle" : "custom"
+			}
+		}, {
+			"path":"pages/login/wx",
+			"style": {
+				"navigationBarTitleText":"微信授权"
+			}
+		}
+	    ,{
+            "path" : "pages/productInfo/productInfo",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/news/news",
+            "style" : {
+				"navigationBarTextStyle":"black",
+				"enablePullDownRefresh":true,
+				"titleNView" : false,
+				"navigationStyle" : "custom"
+			}
+        }
+        /* ,{
+            "path" : "pages/shoppingCard/shoppingCard",
+            "style" : {
+				"navigationBarTextStyle":"black",
+				"titleNView" : false,
+				"navigationStyle" : "custom"
+			}
+        } */
+        ,{
+            "path" : "pages/my/my",
+            "style" : {
+				"navigationBarBackgroundColor":"#34CD6D",
+				"navigationBarTextStyle":"white",
+				"navigationBarTitleText":"个人中心"
+				/* "titleNView" : false,
+				"navigationStyle" : "custom" */
+			}
+        }
+        ,{
+            "path" : "pages/artInfo/artInfo",
+            "style" : {
+				
+			}
+        }
+        ,{
+            "path" : "pages/myorders/myorders",
+            "style" : {
+				"navigationBarTitleText":"我的订单"
+			}
+        }
+        ,{
+            "path" : "pages/test/test",
+            "style" : {}
+        },
+		{
+		    "path" : "pages/search/search",
+		    "style" : {
+				"titleNView" : false,
+				"bounce" : "none",
+				"scrollIndicator" : "none",
+				"navigationBarTextStyle":"#fff",
+				"navigationStyle" : "custom"
+			}
+		}
+        ,{
+            "path" : "pages/agent/apply/apply",
+            "style" : {
+				"navigationBarTitleText":"申请成为代理"
+			}
+        }
+        ,{
+            "path" : "pages/product/show",
+            "style": {
+            	"titleNView" : false,
+            	"navigationStyle" : "custom"
+            }
+        }
+        ,{
+            "path" : "pages/shoppingBasket/list",
+            "style" : {
+            	"navigationBarTitleText":"购物车"
+            }
+        }
+        ,{
+            "path" : "pages/my/address",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/my/updateAddress",
+            "style" : {}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "山语思农",
+		"navigationBarBackgroundColor": "#34CD6D",
+		"backgroundColor": "#34CD6D"
+	},
+	"condition": { //模式配置，仅开发期间生效
+	    "current": 0, //当前激活的模式（list 的索引项）
+	    "list": [{
+	            "name": "index", //模式名称
+	            "path": "pages/index/index", //启动页面，必选
+	            "query": "tagId=1&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
+	        }, {
+	            "name": "me", //模式名称
+	            "path": "pages/my/my", //启动页面，必选
+	            "query": "tagId=1&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
+	        }, {
+	            "name": "agent", //模式名称
+	            "path": "pages/agent/apply/apply", //启动页面，必选
+	            "query": "tagId=1&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
+	        }, {
+	            "name": "show", //模式名称
+	            "path": "pages/product/show", //启动页面，必选
+	            "query": "id=1&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
+	        }, {
+	            "name": "address", //模式名称
+	            "path": "pages/my/updateAddress", //启动页面，必选
+	            "query": "id=1&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
+	        }, {
+	            "name": "search", //模式名称
+	            "path": "pages/search/search", //启动页面，必选
+	            "query": "id=1&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
+	        }
+	    ]
+	}
+}

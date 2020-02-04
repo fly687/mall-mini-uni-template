@@ -1,0 +1,12 @@
+.zsl-card {
+	width:96%; border:1px #ddd solid; border-radius: 5px; margin: 10px 1%; font-size: 13px;
+}
+.zsl-card-header {
+	height: 35px; border-bottom: 1px #ddd solid; line-height: 35px; padding: 0px 10px; font-size: 14px;
+}
+.zsl-card-header-extra {
+	float: right;
+}
+.zsl-card-body {
+	margin: 10px; font-size:13px;
+}
