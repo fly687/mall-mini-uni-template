@@ -1,11 +1,11 @@
 <template>
 	<view>
 	<view class="grace-body" v-if="!applyObj">
-		<agentApplyForm/>
+		<agentApplyForm ref="applyForm"/>
 	</view>
 	<view class="grace-body" v-if="applyObj">
 		<agentApplyDetail v-if="(applyObj.status=='1' || applyObj.status=='0')" :applyObj="applyObj" :verifyList="verifyList" :paperList="paperList"/>
-		<agentApplyForm v-if="applyObj.status=='2'" :curObj="applyObj" :verifyList="verifyList" :paperList="paperList"/>
+		<agentApplyForm v-if="applyObj.status=='2'" :defaultIndexVal="defaultIndexVal" :curObj="applyObj" :verifyList="verifyList" :paperList="paperList"/>
 	</view>
 	</view>
 </template>
@@ -22,6 +22,7 @@
 				applyObj: null,
 				verifyList:[],
 				paperList:[],
+				defaultIndexVal: [0,0,0],
 			}
 		},
 		onLoad: function() {
@@ -34,9 +35,20 @@
 				_self.$request.get("miniAgentService.loadOne", {}).then((res)=> {
 					//console.log(res);
 					_self.applyObj = res.obj; //表示已经申请过
+					if(res.obj && res.obj.addressIndex) {
+						_self.buildDefaultIndex(res.obj.addressIndex);
+					}
 					_self.verifyList = res.verifyList;
 					_self.paperList = res.paperList;
 				})
+			},
+			buildDefaultIndex: function(addressIndex) {
+				const array = addressIndex.split("-");
+				if(array) {
+					let vals = [];
+					array.map((item,index)=>vals[index]=parseInt(item));
+					_self.defaultIndexVal = vals;
+				}
 			},
 			
 		},

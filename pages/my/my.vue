@@ -21,27 +21,26 @@
 		</view>
 		<view class="ucenter-line"></view>
 		<view class="grace-list grace-margin-top">
-			<view class="grace-list-items">
-				<text class="grace-list-icon grace-icons icon-friend grace-blue"></text>
+			<view class="grace-list-items" @tap="gotoFun('address')">
+				<text class="grace-list-icon grace-icons icon-address grace-blue"></text>
 				<view class="grace-list-body grace-border-b">
 					<view class="grace-list-title">
-						<text class="grace-list-title-text">好友动态</text>
-						<text class="grace-badge grace-bg-red">12</text>
+						<text class="grace-list-title-text">收货地址</text>
+					</view>
+				</view>
+				<text class="grace-list-arrow-right grace-icons icon-arrow-right"></text>
+			</view>
+			<view class="grace-list-items" @tap="gotoFun('agent')">
+				<text class="grace-list-icon grace-icons icon-kf1 grace-green"></text>
+				<view class="grace-list-body grace-border-b">
+					<view class="grace-list-title">
+						<text class="grace-list-title-text">我要代理</text>
 					</view>
 				</view>
 				<text class="grace-list-arrow-right grace-icons icon-arrow-right"></text>
 			</view>
 			<view class="grace-list-items">
-				<text class="grace-list-icon grace-icons icon-wallet grace-green"></text>
-				<view class="grace-list-body grace-border-b">
-					<view class="grace-list-title">
-						<text class="grace-list-title-text">我的钱包</text>
-					</view>
-				</view>
-				<text class="grace-list-arrow-right grace-icons icon-arrow-right"></text>
-			</view>
-			<view class="grace-list-items">
-				<text class="grace-list-icon grace-icons icon-article grace-blue-sky"></text>
+				<text class="grace-list-icon grace-icons icon-kf2 grace-blue-sky"></text>
 				<view class="grace-list-body grace-border-b">
 					<view class="grace-list-title">
 						<text class="grace-list-title-text">我的文章</text>
@@ -50,7 +49,7 @@
 				<text class="grace-list-arrow-right grace-icons icon-arrow-right"></text>
 			</view>
 			<view class="grace-list-items">
-				<text class="grace-list-icon grace-icons icon-user grace-red"></text>
+				<text class="grace-list-icon grace-icons icon-kf3 grace-red"></text>
 				<view class="grace-list-body">
 					<view class="grace-list-title">
 						<text class="grace-list-title-text">身份认证</text>
@@ -101,11 +100,14 @@ export default{
 	},
 	onLoad() {
 		const custom = uni.getStorageSync(config.CUR_CUSTOM);
-		console.log(custom)
+		//console.log(custom)
 		this.custom = custom;
 	},
 	methods: {
-		
+		gotoFun: function(fun) {
+			if(fun==='address') {uni.navigateTo({ url: "./address" })}
+			else if(fun==='agent') {uni.navigateTo({ url: "../agent/apply/apply" })}
+		},
 	},
 	components:{
 		graceBoxBanner,gracePage

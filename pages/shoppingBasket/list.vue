@@ -21,7 +21,7 @@
 					<graceCheckBtn :checked="checkSelected(item)" @change="itemChange" 
 					:parameter="[item]"></graceCheckBtn>
 				</view>
-				<image :src="item.proImg" class="grace-shoppingcard-goods-image" mode="widthFix"></image>
+				<image :src="item.proImg" @tap="showProduct(item.proId)" class="grace-shoppingcard-goods-image" mode="widthFix"></image>
 				<view class="grace-shoppingcard-goods-body">
 					<view class="grace-shoppingcard-goods-title"><text class="specs-name">[{{item.specsName}}]</text>{{item.proTitle}}</view>
 					<view class="grace-space-between">
@@ -91,7 +91,11 @@ export default {
 				that.shoppingCard = res.basketList;
 			});
 		},
-		
+		showProduct: function(id) {
+			uni.navigateTo({
+				url: '../product/show?id='+parseInt(id)
+			});
+		},
 		//计算总计函数
 		countTotoal:function(){
 			const selectedBasket = that.selectedBasket;

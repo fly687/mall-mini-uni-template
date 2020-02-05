@@ -1,7 +1,7 @@
 <template>
 	<gracePage headerBG="#FFFFFF" :customHeader="false">
 		<view slot="gBody" class="grace-body">
-			<addressFormComponent :address="address" @save="onSave"></addressFormComponent>
+			<addressFormComponent ref="addressFormComponent" @deleteAddress="deleteAddress" @save="onSave"></addressFormComponent>
 		</view>
 	</gracePage>
 </template>
@@ -16,18 +16,31 @@ export default {
     data() {
     	return {
 			address: {},
+			id: 0
 		};
     },
 	onLoad(options) {
 		console.log(options);
 		that = this;
+		that.id = options.id;
+		that.loadData();
 	},
 	methods:{
+		loadData: function() {
+			const id = that.id;
+			if(id && id>0) {
+				that.$request.get("miniCustomAddressService.loadOne", {id:id}).then((res)=> {
+					//console.log(res);
+					that.address = res.address;
+					that.$refs.addressFormComponent.initData(res.address);
+				});
+			}
+		},
 		// 表单提交
 		onSave : function(formData){
-			console.log(formData);
+			//console.log(formData);
 			that.$request.get("miniCustomAddressService.add", formData).then((res)=> {
-				console.log(res);
+				//console.log(res);
 				uni.showToast({
 					title: res.message, icon:"none", success() {
 						uni.navigateTo({
@@ -36,7 +49,19 @@ export default {
 					}
 				})
 			});
-		}
+		},
+		deleteAddress: function(id) {
+			that.$request.get("miniCustomAddressService.delete", {id: id}).then((res)=> {
+				//console.log(res);
+				uni.showToast({
+					title: res.message, icon:"none", success() {
+						uni.redirectTo({
+							url:"./address"
+						})
+					}
+				})
+			});
+		},
 	},
 	components:{gracePage, graceAddressPicker,addressFormComponent}
 }
