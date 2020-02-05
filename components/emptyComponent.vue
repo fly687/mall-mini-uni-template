@@ -2,7 +2,7 @@
 	<view class="grace-text-center grace-margin-top">
 		<view class="zsl-icons icon-kong empty-image"></view>
 		<text class="empty-message">{{message}} </text>
-		<text class="empty-message-opt grace-blue" style="margin-left:20rpx;" @tap="gotoTarget">{{optMsg}}</text>
+		<text class="empty-message-opt grace-blue" v-if="optMsg" style="margin-left:20rpx;" @tap="gotoTarget">{{optMsg}}</text>
 	</view>
 </template>
 

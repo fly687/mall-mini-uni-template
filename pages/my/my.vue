@@ -39,11 +39,11 @@
 				</view>
 				<text class="grace-list-arrow-right grace-icons icon-arrow-right"></text>
 			</view>
-			<view class="grace-list-items">
-				<text class="grace-list-icon grace-icons icon-kf2 grace-blue-sky"></text>
+			<view class="grace-list-items" @tap="gotoFun('favorite')">
+				<text class="grace-list-icon grace-icons icon-shoucang grace-blue-sky"></text>
 				<view class="grace-list-body grace-border-b">
 					<view class="grace-list-title">
-						<text class="grace-list-title-text">我的文章</text>
+						<text class="grace-list-title-text">我的收藏</text>
 					</view>
 				</view>
 				<text class="grace-list-arrow-right grace-icons icon-arrow-right"></text>
@@ -107,6 +107,7 @@ export default{
 		gotoFun: function(fun) {
 			if(fun==='address') {uni.navigateTo({ url: "./address" })}
 			else if(fun==='agent') {uni.navigateTo({ url: "../agent/apply/apply" })}
+			else if(fun==='favorite') {uni.navigateTo({ url: "./favorite" })}
 		},
 	},
 	components:{

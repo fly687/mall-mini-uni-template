@@ -146,7 +146,7 @@
 			},
 			onFavorite: () => {
 				const product = that.product;
-				that.$request.get("miniProductFavoriteRecordService.addOrDelete", {proId: product.id, proTitle: product.title}).then((res) => {
+				that.$request.get("miniProductFavoriteRecordService.addOrDelete", {proId: product.id, proTitle: product.title, proImg: product.headImgUrl}).then((res) => {
 					//console.log(res);
 					if(res.action==='save') { that.hasFavorite = true;}
 					else {that.hasFavorite = false;}

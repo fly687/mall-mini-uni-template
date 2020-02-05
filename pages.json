@@ -120,6 +120,12 @@
             "path" : "pages/my/updateAddress",
             "style" : {}
         }
+        ,{
+            "path" : "pages/my/favorite",
+            "style" : {
+				"navigationBarTitleText":"我的收藏"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
@@ -146,8 +152,8 @@
 	            "path": "pages/product/show", //启动页面，必选
 	            "query": "id=1&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
 	        }, {
-	            "name": "address", //模式名称
-	            "path": "pages/my/address", //启动页面，必选
+	            "name": "favorite", //模式名称
+	            "path": "pages/my/favorite", //启动页面，必选
 	            "query": "id=1&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
 	        }, {
 	            "name": "search", //模式名称

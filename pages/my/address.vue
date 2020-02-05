@@ -31,7 +31,7 @@
 <script>
 var that;
 import gracePage from "../../graceUI/components/gracePage.vue";
-import emptyCompent from "@/components/emptyComponent.vue"
+import emptyCompent from "@/components/emptyComponent.vue";
 export default {
     data() {
     	return {
