@@ -4,12 +4,8 @@
 		<view class="grace-line-title" style="margin-top:40rpx;">
 		</view>
 		<!-- 购物车为空 -->
-		<view v-if="shoppingCard.length < 1" style="margin-top:150px;">
-			<graceEmpty :iconSize="168" :iconType="4" iconColor="#E1E1E1"></graceEmpty>
-			<view class="grace-text-center grace-margin-top">
-				<text class="grace-text-small">您的购物车空空如也 ~ </text>
-				<text class="grace-text-small grace-blue" style="margin-left:20rpx;" @tap="gotoIndex">去购物</text>
-			</view>
+		<view v-if="shoppingCard.length < 1" style="margin-top:100px;">
+			<emptyCompent optMsg="去购物" message="你的购物车空空如也~" @onClick="gotoIndex"></emptyCompent>
 		</view>
 		<!-- 购物车为空 -->
 		
@@ -60,9 +56,10 @@
 <script>
 var that;
 import gracePage from "../../graceUI/components/gracePage.vue";
-import graceEmpty from "../../graceUI/components/graceEmptyNew.vue";
 import graceCheckBtn from '../../graceUI/components/graceCheckBtn.vue';
 import graceNumberBox from '../../graceUI/components/graceNumberBox.vue';
+
+import emptyCompent from "@/components/emptyComponent.vue"
 export default {
 	data() {
 		return {
@@ -208,8 +205,8 @@ export default {
 	components:{
 		gracePage,
 		graceNumberBox,
-		graceEmpty,
-		graceCheckBtn
+		graceCheckBtn,
+		emptyCompent
 	}
 }
 </script>

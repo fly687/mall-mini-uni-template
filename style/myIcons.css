@@ -3,12 +3,13 @@
 	font-family : "zsl-iconfont"; 
 	font-weight : normal; 
 	font-style  : normal; 
-	src         : url('https://at.alicdn.com/t/font_1607054_yazbdgl11yh.ttf') format('truetype');
+	src         : url('https://at.alicdn.com/t/font_1607054_ww9b6ea6hck.ttf') format('truetype');
 }
 .zsl-icons{font-family:"zsl-iconfont" !important; font-style:normal;}
 
 .icon-arrow-right-red:before{content:"\e616";}
 .icon-arrow-right-wide:before{content:"\e6a8";}
+
 
 
 
@@ -44,6 +45,10 @@
 
 .icon-jiantou:before {
   content: "\e616";
+}
+
+.icon-kong:before {
+  content: "\e708";
 }
 
 .icon-huaban:before {

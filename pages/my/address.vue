@@ -1,7 +1,10 @@
 <template>
 	<gracePage headerBG="#FFFFFF" :customHeader="false">
 		<view slot="gBody" class="grace-body">
-			<view class="grace-list grace-margin-top" style="padding-bottom: 50px;">
+			<view v-if="addressList.length<=0">
+				<emptyCompent optMsg="添加地址" @onClick="addAddress"></emptyCompent>
+			</view>
+			<view class="grace-list grace-margin-top" style="padding-bottom: 50px;" v-if="addressList.length>0">
 				<view class="single-address-view" :class="[item.isDefault==='1'?'default-address-view':'']" v-for="(item, index) in addressList" :key="index">
 					<view class="default-logo" v-if="item.isDefault==='1'"></view>
 					<view class="address-body">
@@ -28,6 +31,7 @@
 <script>
 var that;
 import gracePage from "../../graceUI/components/gracePage.vue";
+import emptyCompent from "@/components/emptyComponent.vue"
 export default {
     data() {
     	return {
@@ -80,7 +84,7 @@ export default {
 			});
 		},
 	},
-	components:{gracePage}
+	components:{gracePage,emptyCompent}
 }
 </script>
 <style>
