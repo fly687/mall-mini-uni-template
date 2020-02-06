@@ -12,7 +12,7 @@
 		</view>
 		<!-- 推荐图标 end -->
 		<view class="common-line"></view>
-		<ProductListComponent titleIcon="icon-shuiguopingguo" titleName="当季爆品" :proList="productCurrentList"/>
+		<ProductListComponent @onClick="onClick" titleIcon="icon-shuiguopingguo" titleName="当季爆品" :proList="productCurrentList"/>
 		<view class="common-line"></view>
 		
 		<graceToTop :top="top" color="#FF0036"></graceToTop>
@@ -61,7 +61,11 @@ export default {
 				that.productCurrentList = res.productList; //当季
 			});
 		},
-		
+		onClick: function() {
+			uni.navigateTo({
+				url: "../product/listProduct?type=1"
+			})
+		}
 	},
 	components : {
 		graceToTop,

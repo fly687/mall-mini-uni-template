@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="column-title">
+		<view class="column-title" @tap="onClick">
 			<text :class="'zsl-icons column-icon '+titleIcon"></text>
 			<text class="column-title-name">{{titleName}}</text>
 			<view class="more-button zsl-icons icon-right"></view>
@@ -58,6 +58,9 @@ export default {
 		rebuildCount: function(item) {
 			return parseInt(item.readCount/2) + item.favoriteCount;
 		},
+		onClick: function() {
+			this.$emit("onClick");
+		}
 	},
 	components: {
 	}
