@@ -3,7 +3,7 @@
 		<view v-if="data.length<=0">
 			<emptyCompent message="一点东西都没留下" optMsg="去逛逛" @onClick="gotoIndex"></emptyCompent>
 		</view>
-		<view v-if="data.length>0" class="single-data grace-nowrap" v-for="(item, index) in data" :key="index">
+		<view class="single-data grace-nowrap" v-for="(item, index) in data" :key="index">
 			<view class="data-image" @tap="onOpt('show', item.proId)"><image :src="item.proImg" mode="widthFix"></image></view>
 			<view class="grace-flex1 data-content">
 				<view class="data-title">{{item.proTitle}}</view>
@@ -11,11 +11,16 @@
 			</view>
 			<view class="data-opt" @tap="onOpt('delete', item.id)">删除</view>
 		</view>
+		<view class="grace-margin-top grace-text-center">
+			<text class="grace-text zsl-loadmore-text">{{bottomMsg}}</text>
+		</view>
+		<graceLoading :loadingType="loadingType"></graceLoading>
 	</view>
 </template>
 
 <script>
 var that;
+import graceLoading from '@/graceUI/components/graceLoading.vue';
 import emptyCompent from "@/components/emptyComponent.vue"
 	export default {
 		data() {
@@ -24,12 +29,19 @@ import emptyCompent from "@/components/emptyComponent.vue"
 				canPage: true,
 				data: [],
 				pageSize: 15,
-				bottomMsg: '上划加载'
+				bottomMsg: '上划加载更多 ^_^',
+				loadingType: '3'
 			}
 		},
 		onLoad() {
 			that = this;
 			that.loadData();
+		},
+		onReachBottom: function() {
+			//避免多次触发
+			//console.log("----->", this.loadingType)
+			if (this.loadingType == 1 || this.loadingType == 2){return ;}
+			this.loadMoreFunc();
 		},
 		methods: {
 			reload: function() {
@@ -45,10 +57,15 @@ import emptyCompent from "@/components/emptyComponent.vue"
 						that.data = that.data.concat(data);
 						if(data.length>=that.pageSize) {that.canPage = true;}
 						else {that.canPage = false; that.bottomMsg = "我也是有底线的";}
+						that.page = that.page + 1;
 					});
 				} else {
 					
 				}
+			},
+			loadMoreFunc: function(e) {
+				//console.log(e);
+				that.loadData();
 			},
 			removeData: function(id) {
 				let data = that.data;
@@ -72,6 +89,7 @@ import emptyCompent from "@/components/emptyComponent.vue"
 						}
 					})
 				} else if(action==='show') {
+					//console.log(id)
 					uni.navigateTo({
 						url: "../product/show?id="+id
 					})
@@ -84,7 +102,7 @@ import emptyCompent from "@/components/emptyComponent.vue"
 			}
 		},
 		components: {
-			emptyCompent,
+			emptyCompent,graceLoading
 		}
 	}
 </script>

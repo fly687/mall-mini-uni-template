@@ -94,13 +94,13 @@
 		},
 		onLoad(options) {
 			that = this;
+			//console.log(options)
 			this.id = options.id;
 			that.initData();
 		},
 		methods: {
 			initData: ()=> {
 				that.$request.get("miniProductService.loadOne", {id: that.id}).then((res) => {
-					//console.log(res);
 					that.product = res.product;
 					that.specsList = res.specsList;
 					that.mediumList = res.mediumList;

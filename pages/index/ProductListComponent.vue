@@ -77,7 +77,7 @@ export default {
 	}
 	.single-product {
 		width:90%; margin-left: 5%; min-height: 10px; border-radius: 10px;
-		box-shadow: 5px 5px 5px 2px #BBBBBB;
+		box-shadow: 5px 5px 5px 2px #BBBBBB; margin-bottom: 15px;
 	}
 	.pro-image {
 		padding:0px; position: relative;
