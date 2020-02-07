@@ -7,35 +7,37 @@
 				<view class="grace-header-body grace-nowrap">
 					<!-- 返回按钮 -->
 					<view class="icons grace-icons icon-arrow-left grace-white" @tap="gotoBack" style="font-size:44rpx;"></view>
-					<view class="zsl-search">
+					<view class="zsl-search grace-flex1">
 						<view class="zsl-search-in grace-nowrap">
 							<view class="grace-icons icon-search zsl-search-icon"></view>
-							<view class="input grace-flex1"><input type="search" placeholder="关键字"/></view>
+							<view class="input grace-flex1"><input type="search" @input="onInput" placeholder="关键字" :value="searchKey"/></view>
+							<view class="zsl-search-btn" @tap="onSearch">搜索</view>
 						</view>
 					</view>
 				</view>
 			</graceHeader>
 			<view class="grace-body">
-				<view v-if="searchKeyHistory.length > 0">
+				<view v-if="ownList.length > 0">
 					<view class="grace-title" style="margin-top:15rpx;">
 						<text class="grace-title-text grace-black">搜索历史</text>
 						<text class="grace-text-small grace-gray grace-icons icon-remove" @tap="removeAll">清空</text>
 					</view>
 					<view class="grace-search-tags grace-wrap">
-						<view v-for="(item, index) in searchKeyHistory" :key="index" :data-key="item" class="grace-search-tags-items" @tap="setKey">{{item}}</view>
+						<view v-for="(item, index) in ownList" :key="index" :data-key="item.keyword" class="grace-search-tags-items" @tap="setKey">{{item.keyword}}</view>
 					</view>
 				</view>
 				<view class="grace-title" style="margin-top:15rpx;">
 					<text class="grace-title-text grace-black">热门搜索</text>
 				</view>
 				<view class="grace-search-tags grace-wrap">
-					<view v-for="(item, index) in HotKeyHistory" :key="index" :data-key="item" class="grace-search-tags-items" @tap="setKey">{{item}}</view>
+					<view v-for="(item, index) in tagList" :key="index" :data-key="item.name" class="grace-search-tags-items" @tap="setKey">{{item.name}}</view>
 				</view>
 			</view>
 		</view>
 	</gracePage>
 </template>
 <script>
+var that;
 import gracePage from "../../graceUI/components/gracePage.vue";
 import graceSearch from "../../graceUI/components/graceSearch.vue";
 import graceHeader from '@/graceUI/components/graceHeader.vue';
@@ -43,31 +45,79 @@ export default {
 	data() {
 		return {
 			searchKey : "",
-			searchKeyHistory : [ 'GraceUI', '测试', '关键字', '类型' ],
-			HotKeyHistory : [ 'GraceUI', '手机', '小米', 'iphone X']
+			ownList : [],
+			tagList : []
 		}
 	},
-	onLoad:function(){},
+	onLoad:function(){
+		that = this;
+		that.loadData();
+	},
 	methods:{
+		loadData: function() {
+			this.$request.get("miniSearchService.onSearch", {}).then((res)=> {
+				console.log(res);
+				that.ownList = res.ownList;
+				that.tagList = res.tagList;
+			})
+		},
 		gotoBack: function() {
 			uni.navigateBack();
 		},
-		inputting : function(e){
-			console.log(e);
-		},
-		confirm : function (e) {
-			console.log(e);
-		},
 		setKey : function(e){
 			var key = e.currentTarget.dataset.key;
-			uni.showToast({
+			/* uni.showToast({
 				title : '开始搜索 ' + key,
 				icon  : "none"
-			});
+			}); */
 			this.searchKey = key;
+			this.onSearch();
+		},
+		onInput: function(e) {
+			console.log(e);
+			this.searchKey = e.detail.value;
+		},
+		onSearch: function() {
+			const key = this.searchKey;
+			if(!key || key==='关键字') {
+				uni.showToast({
+					title: "输入关键字", icon: "none"
+				})
+			} else {
+				that.$request.get("miniSearchService.search", {keyword: key}).then((res)=> {
+					console.log(res);
+					const tag = res.tag;
+					const productList = res.productList;
+					if(tag && tag.proId) {
+						uni.navigateTo({
+							url: "../product/show?id="+tag.proId
+						})
+					}
+				});
+				that.rebuildOwn(key);
+			}
+		},
+		rebuildOwn: function(keyword) {
+			const ownList = that.ownList;
+			let newList = [{keyword: keyword}];
+			ownList.map((item)=> {
+				if(item.keyword!==keyword) {newList.push(item);}
+			})
+			that.ownList = newList;
 		},
 		removeAll : function(){
-			this.searchKeyHistory = [];
+			uni.showModal({
+				title:"提示", content: "是否清空记录", success(res) {
+					if(res.confirm) {
+						that.$request.get("miniSearchService.cleanAll",{}).then((res)=> {
+							uni.showToast({
+								title: res.message, icon: "none"
+							})
+							that.ownList = [];
+						})
+					}
+				}
+			})
 		}
 	},
 	components:{
@@ -85,4 +135,5 @@ export default {
 	.zsl-search-in {
 	}
 	.zsl-search-icon {width: 18px; height: 20px; line-height: 24px; padding-left: 18rpx;}
+	.zsl-search-btn {width: 35px; text-align:center; height: 24px; border-left: 1px #e8e8e8 solid; color:#888; line-height: 24px;}
 </style>

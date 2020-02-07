@@ -16,7 +16,7 @@
 		<view class="common-line"></view>
 		
 		<graceToTop :top="top" color="#FF0036"></graceToTop>
-		<view class="zsl-bottom">--</view>
+		<view class="zsl-bottom" >&copy;版权所有</view>
 	</view>
 </template>
 <script>
@@ -93,6 +93,6 @@ export default {
 }
 
 .zsl-bottom {
-	width:100%; min-height: 50px; text-align:center;
+	width:100%; min-height: 50px; text-align:center; line-height: 50px; color:#ccc;
 }
 </style>

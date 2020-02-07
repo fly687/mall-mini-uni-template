@@ -86,7 +86,7 @@ export default {
 		padding:0px; position: relative;
 	}
 	.pro-image image {
-		width:100%; border-radius: 10px 10px 0px 0px; background:#B7DEFA; position: relative;
+		width:100%; border-radius: 10px 10px 0px 0px; /* background:#B7DEFA; */background:#FFFFFF; position: relative;
 	}
 	.count-view {
 		position: absolute; right: 10px; bottom: 10px; padding: 2px 4px; border-radius: 5px; opacity: 0.3; background: #000;

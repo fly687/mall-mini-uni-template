@@ -48,7 +48,7 @@ export default {
 	},
 	methods: {
 		showContent: function(obj) {
-			console.log(obj);
+			//console.log(obj);
 			that.obj = obj; that.showDialog = true;
 		},
 		closeDialog: function() {
