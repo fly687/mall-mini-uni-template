@@ -102,11 +102,6 @@ export default {
 		gotoShow: function(id) {
 			uni.navigateTo({ url: './show?id='+id })
 		},
-		checkFavorite: function(id) {
-			const index = that.favoriteIds.findIndex((item)=>item.id===id);
-			if(index>=0) {return true;}
-			else {return false;}
-		},
 	},
 	components: {
 		gracePage,

@@ -197,9 +197,12 @@ export default {
 		},
 		
 		gotoIndex: function() {
-			uni.switchTab({
+			/* uni.switchTab({
 				url: '../index/index'
-			});
+			}); */
+			uni.navigateTo({
+				url:"../product/listProduct"
+			})
 		},
 	},
 	components:{

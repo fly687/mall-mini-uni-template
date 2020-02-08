@@ -16,7 +16,7 @@
 					</view>
 				</view>
 			</graceHeader>
-			<view class="grace-body">
+			<view class="grace-body" v-if="!hasResult">
 				<view v-if="ownList.length > 0">
 					<view class="grace-title" style="margin-top:15rpx;">
 						<text class="grace-title-text grace-black">搜索历史</text>
@@ -33,12 +33,16 @@
 					<view v-for="(item, index) in tagList" :key="index" :data-key="item.name" class="grace-search-tags-items" @tap="setKey">{{item.name}}</view>
 				</view>
 			</view>
+			<view v-if="hasResult">
+				<searchResultComponent :productList="productList" @onTypeChange="onTypeChange"></searchResultComponent>
+			</view>
 		</view>
 	</gracePage>
 </template>
 <script>
 var that;
 import gracePage from "../../graceUI/components/gracePage.vue";
+import searchResultComponent from "./searchResultComponent.vue";
 import graceSearch from "../../graceUI/components/graceSearch.vue";
 import graceHeader from '@/graceUI/components/graceHeader.vue';
 export default {
@@ -46,7 +50,11 @@ export default {
 		return {
 			searchKey : "",
 			ownList : [],
-			tagList : []
+			tagList : [],
+			productList: [[],[]],
+			hasResult: false,
+			pageSize: 20,
+			searchType: 0, //0-产品；1-资讯
 		}
 	},
 	onLoad:function(){
@@ -56,7 +64,7 @@ export default {
 	methods:{
 		loadData: function() {
 			this.$request.get("miniSearchService.onSearch", {}).then((res)=> {
-				console.log(res);
+				//console.log(res);
 				that.ownList = res.ownList;
 				that.tagList = res.tagList;
 			})
@@ -74,8 +82,13 @@ export default {
 			this.onSearch();
 		},
 		onInput: function(e) {
-			console.log(e);
+			//console.log(e);
 			this.searchKey = e.detail.value;
+		},
+		onTypeChange: function(type) {
+			//console.log(type);
+			this.searchType = type;
+			this.onSearch();
 		},
 		onSearch: function() {
 			const key = this.searchKey;
@@ -84,18 +97,31 @@ export default {
 					title: "输入关键字", icon: "none"
 				})
 			} else {
-				that.$request.get("miniSearchService.search", {keyword: key}).then((res)=> {
-					console.log(res);
+				that.$request.get("miniSearchService.search", {searchType: that.searchType, keyword: key,size: that.pageSize}).then((res)=> {
+					//console.log(res);
 					const tag = res.tag;
-					const productList = res.productList;
+					const productList = res.productList?res.productList:[];
+					//console.log(productList);
 					if(tag && tag.proId) {
 						uni.navigateTo({
 							url: "../product/show?id="+tag.proId
 						})
+					} else {
+						that.rebuildData(productList);
 					}
 				});
 				that.rebuildOwn(key);
 			}
+		},
+		rebuildData: function(data) {
+			const oldData = [[],[]];
+			let lArr = oldData[0]; let rArr = oldData[1];
+			data.map((item, index) => {
+				if(index%2===0) {lArr.push(item);}
+				else {rArr.push(item);}
+			});
+			that.productList = [lArr, rArr];
+			that.hasResult = true;
 		},
 		rebuildOwn: function(keyword) {
 			const ownList = that.ownList;
@@ -121,7 +147,8 @@ export default {
 		}
 	},
 	components:{
-		gracePage, graceSearch,graceHeader
+		gracePage, graceSearch,graceHeader,
+		searchResultComponent
 	}
 }
 </script>
