@@ -42,6 +42,7 @@ export default {
 			speakerMsgs : [],
 			classes : [],
 			productCurrentList: [], //当季
+			coupon:null
 		}
 	},
 	onPageScroll:function(e){
@@ -55,9 +56,10 @@ export default {
 		loadData: function() {
 			that.$request.get("miniIndexService.index", {}).then((res)=> {
 				console.log(res);
-				that.swiperItems = res.carouseList;
-				that.speakerMsgs = res.noticeList;
-				that.classes = res.moduleList;
+				that.swiperItems = res.carouseList; //轮播图
+				that.speakerMsgs = res.noticeList; //通知公告
+				that.classes = res.moduleList; //功能模块
+				that.coupon = res.coupon; //优惠券
 				that.productCurrentList = res.productList; //当季
 			});
 		},

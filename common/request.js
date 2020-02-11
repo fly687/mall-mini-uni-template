@@ -81,19 +81,21 @@ request.get = (apiCode, params, options) => {
 		uni.hideLoading();
 		//console.log(res);
 		if(res.length<=1) {
-			uni.showToast({
+			/* uni.showToast({
 				title: '出错：'+res[0].errMsg, icon:"none"
-			});
+			}); */
+			console.error(res[0].errMsg);
 		} else {
 			const data = res[1].data;
 			if(data.errCode!='0') {
-				uni.showModal({
+				/* uni.showModal({
 					title: '出错啦~',
 					content: data.reason,
 					success() {
 						//return {}
 					}
-				});
+				}); */
+				console.error(data.reason);
 				//return false; //如果出现错误就返回空对象
 			} else if(data.result.needLogin=="1") { //如果需要登陆
 				uni.showModal({

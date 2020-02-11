@@ -21,6 +21,15 @@
 		</view>
 		<view class="ucenter-line"></view>
 		<view class="grace-list grace-margin-top">
+			<view class="grace-list-items" @tap="gotoFun('coupon')">
+				<text class="grace-list-icon zsl-icons icon-coupon grace-red"></text>
+				<view class="grace-list-body grace-border-b">
+					<view class="grace-list-title">
+						<text class="grace-list-title-text">我的优惠券</text>
+					</view>
+				</view>
+				<text class="grace-list-arrow-right grace-icons icon-arrow-right"></text>
+			</view>
 			<view class="grace-list-items" @tap="gotoFun('address')">
 				<text class="grace-list-icon grace-icons icon-address grace-blue"></text>
 				<view class="grace-list-body grace-border-b">
@@ -41,18 +50,9 @@
 			</view>
 			<view class="grace-list-items" @tap="gotoFun('favorite')">
 				<text class="grace-list-icon grace-icons icon-shoucang grace-blue-sky"></text>
-				<view class="grace-list-body grace-border-b">
-					<view class="grace-list-title">
-						<text class="grace-list-title-text">我的收藏</text>
-					</view>
-				</view>
-				<text class="grace-list-arrow-right grace-icons icon-arrow-right"></text>
-			</view>
-			<view class="grace-list-items">
-				<text class="grace-list-icon grace-icons icon-kf3 grace-red"></text>
 				<view class="grace-list-body">
 					<view class="grace-list-title">
-						<text class="grace-list-title-text">身份认证</text>
+						<text class="grace-list-title-text">我的收藏</text>
 					</view>
 				</view>
 				<text class="grace-list-arrow-right grace-icons icon-arrow-right"></text>
@@ -108,6 +108,7 @@ export default{
 			if(fun==='address') {uni.navigateTo({ url: "./address" })}
 			else if(fun==='agent') {uni.navigateTo({ url: "../agent/apply/apply" })}
 			else if(fun==='favorite') {uni.navigateTo({ url: "./favorite" })}
+			else if(fun==='coupon') {uni.navigateTo({ url: "./coupon" })}
 		},
 	},
 	components:{
