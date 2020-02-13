@@ -107,12 +107,19 @@ export default {
 			const amount = data[0]; const id = Number(data[2]);
 			
 			that.$request.get("miniShoppingBasketService.updateAmount", {id: id, amount: amount}).then((res)=> {
+				// console.log(res)
+				if(res.isOut) {uni.showToast({
+					title: "库存不足", icon:"none"
+				})}
+				const resAmount = res.amount;
 				let newBasketList = [];
-				that.shoppingCard.map((item)=> {if(item.id===id) {item.amount = amount;} newBasketList.push(item);});
+				that.shoppingCard.map((item)=> {if(item.id===id) {item.amount = resAmount;} newBasketList.push(item);});
 				that.shoppingCard = newBasketList;
 				
+				// console.log(that.shoppingCard)
+				
 				let newSelect = [];
-				that.selectedBasket.map((item)=> {if(item.id===id) {item.amount = amount;} newSelect.push(item);});
+				that.selectedBasket.map((item)=> {if(item.id===id) {item.amount = resAmount;} newSelect.push(item);});
 				that.selectedBasket = newSelect;
 				
 				//计算总价
@@ -166,10 +173,20 @@ export default {
 			})
 		},
 		checkout:function(){
-			uni.showToast({
-				title: '计算的数据保存在 shoppingCard 变量内 ^_^',
-				icon : "none"
-			})
+			const selectedBasket = that.selectedBasket;
+			console.log(selectedBasket);
+			if(selectedBasket.length<=0) {
+				uni.showToast({
+					title: '请先选择要结算的产品',
+					icon : "none"
+				})
+			} else {
+				let idStr = "_";
+				selectedBasket.map((item)=> {idStr += (item.id+"_");});
+				uni.navigateTo({
+					url: "../orders/onPay?ids="+idStr
+				})
+			}
 		},
 		// 商品选中
 		itemChange : function (data) {

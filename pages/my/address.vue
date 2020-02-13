@@ -5,7 +5,7 @@
 				<emptyCompent optMsg="添加地址" @onClick="addAddress"></emptyCompent>
 			</view>
 			<view class="grace-list grace-margin-top" style="padding-bottom: 50px;" v-if="addressList.length>0">
-				<view class="single-address-view" :class="[item.isDefault==='1'?'default-address-view':'']" v-for="(item, index) in addressList" :key="index">
+				<view class="single-address-view" :class="[item.isDefault==='1'?'default-address-view':'']" v-for="(item, index) in addressList" :key="index" @tap="onClickAddress(item.id)">
 					<view class="default-logo" v-if="item.isDefault==='1'"></view>
 					<view class="address-body">
 						<view class="address-body-title grace-nowrap">
@@ -38,7 +38,7 @@ export default {
 			addressList: [],
 		};
     },
-	onLoad() {
+	onLoad(options) {
 		that = this;
 		that.loadData();
 	},
@@ -82,6 +82,23 @@ export default {
 					}
 				})
 			});
+		},
+		onClickAddress: function(id) { //如果是从订单处点击过来的，则点击地址需要跳转过去
+			// uni.
+			const payIds = uni.getStorageSync("zsl-onPayData");
+			//console.log(payIds)
+			if(payIds) {
+				const idsObj = JSON.parse(payIds);
+				let query = "addressId="+id;
+				Object.keys(idsObj).forEach((key)=> {
+					//console.log(key, idsObj[key]);
+					query += ("&"+key+"="+idsObj[key]);
+				})
+				//console.log(query);
+				uni.redirectTo({
+					url: "../orders/onPay?"+query
+				})
+			}
 		},
 	},
 	components:{gracePage,emptyCompent}

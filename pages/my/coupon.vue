@@ -58,7 +58,6 @@ export default {
 		loadData: function() {
 			that.$request.get("miniCouponService.listOwn",{page: that.page, status: that.status, 
 				size: that.pageSize}).then((res)=> {
-				console.log(res)
 				const data = res.couponList;
 				that.rebuildData(data);
 				if(data.length>=that.pageSize) {that.canPage = true;}
