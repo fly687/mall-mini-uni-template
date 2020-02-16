@@ -15,8 +15,8 @@
 						<view class="address-content">{{item.provinceName}}{{item.cityName}}{{item.countyName}}{{item.street}}</view>
 					</view>
 					<view class="grace-nowrap address-opts">
-						<view class="grace-flex1 delete-opt" @tap="opt('delete', item.id)">删除</view>
-						<view class="grace-flex1 update-opt" @tap="opt('update', item.id)">修改</view>
+						<view class="grace-flex1 delete-opt" @tap="opt('delete', item)">删除</view>
+						<view class="grace-flex1 update-opt" @tap="opt('update', item)">修改</view>
 					</view>
 				</view>
 			</view>
@@ -40,13 +40,46 @@ export default {
     },
 	onLoad(options) {
 		that = this;
+		//that.chooseAddress();
 		that.loadData();
 	},
 	methods:{
+		chooseAddress: function() { //获取微信收货地址
+			uni.chooseAddress({
+				success(res) {
+					let obj = {
+						name: res.userName,
+						phone: res.telNumber,
+						provinceName: res.provinceName,
+						cityName: res.cityName,
+						countyName: res.countyName,
+						street: res.detailInfo,
+						fromWx: '1',
+						provinceCode: '-', //必须有值，否则验证不过
+						cityCode: '-',
+						countyCode: '-'
+					};
+					that.$request.get("miniCustomAddressService.add", obj).then((result)=> {
+						console.log(result);
+						uni.showToast({
+							title: result.message, icon:"none", success() {
+								uni.redirectTo({
+									url:"./address"
+								})
+							}
+						})
+					});
+				}
+			})
+		},
 		loadData: function() {
 			this.$request.get("miniCustomAddressService.list", {}).then((res)=> {
-				console.log(res);
-				that.addressList = res.addressList;
+				const addressList = res.addressList;
+				if(!addressList || addressList.length<=0) { //当没有任何地址时
+					that.chooseAddress(); //获取微信收货地址
+				} else {
+					that.addressList = res.addressList;
+				}
 			});
 		},
 		addAddress : function(){
@@ -54,18 +87,24 @@ export default {
 		    	url:"./updateAddress?id=0"
 		    })
 		},
-		opt: function(action, id) {
-			console.log(action, id)
+		opt: function(action, obj) {
+			//console.log(action, id)
 			if(action==='update') {
-				uni.navigateTo({
-					url:"./updateAddress?id="+id
-				})
+				if(obj.fromWx==='1') {
+					uni.showToast({
+						title:"此地址来源于微信，不可修改", icon:"none"
+					})
+				} else {
+					uni.navigateTo({
+						url:"./updateAddress?id="+obj.id
+					})
+				}
 			} else if(action==='delete') {
 				uni.showModal({
 					title:"提示", content: "是否删除此地址", success(res) {
 						if(res.confirm) {
 							//console.log("删除")
-							that.deleteAddress(id);
+							that.deleteAddress(obj.id);
 						}
 					}
 				})

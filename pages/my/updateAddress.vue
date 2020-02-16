@@ -43,7 +43,7 @@ export default {
 				//console.log(res);
 				uni.showToast({
 					title: res.message, icon:"none", success() {
-						uni.navigateTo({
+						uni.redirectTo({
 							url:"./address"
 						})
 					}
