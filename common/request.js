@@ -1,6 +1,7 @@
 import Base64 from "@/common/Base64Utils.js";
 import config from "@/common/config.js";
 import tools from "@/common/tools.js";
+import common from "@/common/common.js";
 
 const request = {};
 
@@ -54,6 +55,12 @@ request.upload = (filePath, params) => {
 request.get = (apiCode, params, options) => {
 	
 	const curCustom = uni.getStorageSync(config.CUR_CUSTOM);
+	
+	//console.log(curCustom);
+	if(!curCustom && common.needUserCheck(apiCode)) { //如果没有用户信息,则跳转到获取用户基本信息页面
+		common.gotoUserPage();
+		return new Promise((resove, reject)=> {reject("请先登陆")});
+	}
 	
 	let headers = {
 		'content-type':'application/x-www-form-urlencoded;charset=utf-8',

@@ -27,62 +27,64 @@
 </template>
 
 <script>
-	import config from "@/common/config.js";
-	export default {
-		data() {
-			return {
-				
-			}
-		},
-		onLoad() {
-			/* uni.showModal({
-				title:"提示",
-				content:config.reqUrl
-			}) */
-			const curCustom = uni.getStorageSync(config.CUR_CUSTOM);
-			//console.log(curCustom);
-			if(curCustom && curCustom.openid) { //如果存在openid，则中转到首页
-				uni.redirectTo({ url: "../index/index" })
-			}
-		},
-		methods: {
-			wxGetUserInfo: function() {
-				const that = this;
-				uni.login({
+import config from "@/common/config.js";
+import common from "@/common/common.js";
+export default {
+	data() {
+		return {
+			url: '/pages/index/index'
+		}
+	},
+	onLoad(options) {
+		/* uni.showModal({
+			title:"提示",
+			content:config.reqUrl
+		}) */
+		if(options.url) {
+			this.url = options.url;
+		}
+		const curCustom = uni.getStorageSync(config.CUR_CUSTOM);
+		//console.log(curCustom);
+		if(curCustom && curCustom.openid) { //如果存在openid，则中转到首页
+			uni.redirectTo({ url: "../index/index" })
+		}
+	},
+	methods: {
+		wxGetUserInfo: function() {
+			const that = this;
+			uni.login({
+			  provider: 'weixin',
+			  success: function (loginRes) {
+				//console.log(loginRes);
+				// 获取用户信息
+				uni.getUserInfo({
 				  provider: 'weixin',
-				  success: function (loginRes) {
-					//console.log(loginRes);
-					// 获取用户信息
-					uni.getUserInfo({
-					  provider: 'weixin',
-					  success: function (infoRes) {
-						//console.log('info：', infoRes.userInfo);
-						let userInfo = infoRes.userInfo;
-						userInfo.code = loginRes.code;
-						console.log(infoRes);
-						that.$request.get("miniAuthService.getUserInfo", {code: loginRes.code, encryptedData:infoRes.encryptedData, iv: infoRes.iv}).then((res) => {
-							console.log(res)
-							uni.setStorageSync(config.CUR_CUSTOM, res.custom);
-							uni.showToast({
-								icon:"success",
-								title: "授权成功",
-								success() {
-									uni.switchTab({
-										url:"../index/index"
-									})
-									/* uni.redirectTo({
-										url: "../index/index"
-									}) */
-								}
-							})
+				  success: function (infoRes) {
+					//console.log('info：', infoRes.userInfo);
+					let userInfo = infoRes.userInfo;
+					userInfo.code = loginRes.code;
+					//console.log(infoRes);
+					that.$request.get("miniAuthService.getUserInfo", {code: loginRes.code, encryptedData:infoRes.encryptedData, iv: infoRes.iv}).then((res) => {
+						//console.log(res)
+						uni.setStorageSync(config.CUR_CUSTOM, res.custom);
+						uni.showToast({
+							icon:"success",
+							title: "授权成功",
+							success() {
+								/* uni.switchTab({
+									url:"../index/index"
+								}) */
+								common.gotoTargetPage(that.url);
+							}
 						})
-					  }
-					});
+					})
 				  }
 				});
-			}
+			  }
+			});
 		}
 	}
+}
 </script>
 
 <style>

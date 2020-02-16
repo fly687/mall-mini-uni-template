@@ -2,11 +2,11 @@
 import request from "./request.js";
 import config from './config.js';
 import Base64 from "./Base64Utils.js";
+import common from "./common.js";
 
 function showMsg(msg) {
 	plus.nativeUI.alert(msg);
 }
-
 
 const checkLogin = function() {
 	var user = uni.getStorageSync(config.CUR_CUSTOM);
@@ -41,6 +41,11 @@ function password(str) {
 	return res;
 }
 
+function unPassword(str) {
+	const res = Base64.decodeBase64(decodeURI(str));
+	return res;
+}
+
 /**
  * 加密请求参数
  * @param {Object} params
@@ -59,5 +64,6 @@ function processParams(params) {
 export default {
 	checkLogin: checkLogin,
 	password: password,
+	unPassword: unPassword,
 	processParams: processParams
 };

@@ -1,5 +1,5 @@
 <script>
-	import tools from "@/common/tools.js";
+import tools from "@/common/tools.js";
 export default {
 	onLaunch: function(options) {
 		console.log('App Launch')
@@ -7,7 +7,7 @@ export default {
 			title: '系统提示',
 			content: JSON.stringify(options)
 		}) */
-		tools.checkLogin();
+		// tools.checkLogin(); //从request中进行检测
 		
 		//#ifdef APP-PLUS
 		//tools.upgrade(false);

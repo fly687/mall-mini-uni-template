@@ -11,11 +11,17 @@
 			<button @tap="getAddress">获取收货地址</button>
 			<button @tap="getInvoice">获取发票信息</button>
 			<button open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">getPhoneNumber</button>
+			
+			<view style="padding: 10px">
+			<button @tap="setData(10)">缓存10秒</button>
+			<button @tap="getData()">获取缓存</button>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import common from "@/common/common.js";
 	const recorderManager = uni.getRecorderManager();
 	const innerAudioContext = uni.createInnerAudioContext();
 	
@@ -40,8 +46,28 @@
 					innerAudioContext.play();
 				}
 			});
+			const pages = getCurrentPages();
+			const curPage = pages[pages.length-1];
+			const url = curPage.route;
+			const options = curPage.options;
+			console.log("-------------------------------")
+			console.log(curPage);
+			console.log(url, options);
+			console.log("-------------------------------")
+			console.log(common.getCurrentPage());
 		},
 		methods: {
+			setData: function(timeout) {
+				common.setStorageTime("test-data1", "123456", timeout);
+				common.setStorageTime("test-data2", {key: 'name', value:"123456", name: "张三11"}, timeout);
+			},
+			getData: function() {
+				const data1 = common.getStorageTime("test-data1");
+				console.log("data1", data1);
+				
+				const data2 = common.getStorageTime("test-data2");
+				console.log("data2", data2);
+			},
 			myStart() {
 				console.log('开始录音');
 				

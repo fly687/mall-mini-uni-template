@@ -73,6 +73,7 @@
 	var that ;
 	import graceBottomDialog from '../../graceUI/components/graceBottomDialog.vue';
 	import specsComponent from './specsComponent.vue';
+	import common from "@/common/common.js";
 	
 	import titleComponent from "./titleComponent.vue"
 	import carouseComponent from "./carouseComponent.vue";
@@ -97,6 +98,14 @@
 			//console.log(options)
 			this.id = options.id;
 			that.initData();
+		},
+		onShareAppMessage(obj) {
+			const user = common.getLoginUser();
+			console.log(obj, user);
+			return {
+				title: this.product.title,
+				path: '/pages/product/show?id='+this.product.id
+			}
 		},
 		methods: {
 			initData: ()=> {
