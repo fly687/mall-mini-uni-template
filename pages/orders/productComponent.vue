@@ -1,20 +1,28 @@
 <template>
 	<view class="product-view">
+		<view v-if="data.length<=0" class="no-date-view">
+			<emptyCompent message="所选商品可能已失效或库存不足" optMsg="去逛逛" @onClick="gotoIndex"></emptyCompent>
+		</view>
 		<view class="single-product-view grace-nowrap" v-for="(item, index) in data" :key="index">
 			<view class="pro-img">
 				<image :src="item.proImg" class="grace-shoppingcard-goods-image" mode="widthFix"></image>
 			</view>
-			<view class="grace-flex1 pro-content">
-				<view class="pro-title">{{item.proTitle}}</view>
-				<view class="pro-specs-name">{{item.specsName}}</view>
-			</view>
-			<view class="pro-price">
-				<view class="price">￥{{item.price}}</view>
-				<view class="count grace-nowrap"> 
-					<text class="operater-text" @tap="changeAmount(item, item.amount-1)">-</text>
-					<input class="operater-input" disabled="true" :value="item.amount"/>
-					<text class="operater-text" @tap="changeAmount(item, item.amount+1)">+</text>
+			<view class="grace-flex1">
+				<view class="grace-nowrap">
+					<view class="grace-flex1 pro-content">
+						<view class="pro-title">{{item.proTitle}}</view>
+						<view class="pro-specs-name">{{item.specsName}}</view>
+					</view>
+					<view class="pro-price">
+						<view class="price">￥{{item.price}}</view>
+						<view class="count grace-nowrap"> 
+							<text class="operater-text" @tap="changeAmount(item, item.amount-1)">-</text>
+							<input class="operater-input" disabled="true" :value="item.amount"/>
+							<text class="operater-text" @tap="changeAmount(item, item.amount+1)">+</text>
+						</view>
+					</view>
 				</view>
+				<view class="delivery-date" v-if="item.saleMode==='2' && item.deliveryDate">预计发货：{{item.deliveryDate}}</view>
 			</view>
 		</view>
 	</view>
@@ -22,6 +30,7 @@
 
 <script>
 var that;
+import emptyCompent from "@/components/emptyComponent.vue";
 export default {
 	props: {
 		productList: {
@@ -60,7 +69,13 @@ export default {
 			that.$emit("changeAmount", {key:key, amount:amount});
 			this.data = data;
 		},
-	}
+		gotoIndex: function() { //到首页
+			uni.switchTab({
+				url:"../index/index"
+			})
+		},
+	},
+	components: {emptyCompent}
 }
 </script>
 
@@ -76,6 +91,9 @@ export default {
 }
 .single-product-view .pro-img image {
 	width:100px;
+}
+.single-product-view:last-child {
+	border-bottom: none;
 }
 
 .pro-price {
@@ -103,5 +121,8 @@ export default {
 }
 .operater-text {
 	line-height: 20px; padding: 0px 6px;
+}
+.delivery-date {
+	padding-top: 5px; color:#a20;
 }
 </style>

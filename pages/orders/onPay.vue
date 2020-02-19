@@ -121,20 +121,21 @@ export default {
 				uni.showToast({
 					title:"没有任何产品", icon:"none"
 				})
+			} else {
+				let basketData = "_";
+				productList.map((item)=> {
+					//console.log(item)
+					basketData += (item.proId+"-"+item.specsId+"-"+item.amount+"_");
+				});
+				
+				const data = {
+					addressId: address.id,
+					remark: remark,
+					couponId: coupon.id,
+					basketData: basketData,
+				}
+				console.log("submitData:::", data);
 			}
-			let basketData = "_";
-			productList.map((item)=> {
-				//console.log(item)
-				basketData += (item.proId+"-"+item.specsId+"-"+item.amount+"_");
-			});
-			
-			const data = {
-				addressId: address.id,
-				remark: remark,
-				couponId: coupon.id,
-				basketData: basketData,
-			}
-			console.log("submitData:::", data);
 		},
 		buildDefaultCoupon: function() {
 			const c = {id:0, couponName: "不使用", remark: '本次不使用任何优惠券', worth: ''};
