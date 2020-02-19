@@ -2,7 +2,7 @@
 	<view class="main-container">
 		<addressComponent :address="address" @selectAddress="selectAddress"></addressComponent>
 		
-		<productComponent :basketList="basketList"></productComponent>
+		<productComponent ref="proComponent" @changeAmount="changeAmount"></productComponent>
 		
 		<view class="bottom-opts">
 			<text class="total-count">共{{totalCount}}件，</text>
@@ -60,9 +60,10 @@ export default {
 		return {
 			ids: "", //购物车ID数据
 			address: {}, //默认地址
-			basketList: [], //购物车列表
+			basketList: [], //购物车列表，如果是购物车购买则此数组不为空
 			specsList: [], //产品列表
 			couponList: [], //优惠券列表
+			productList: [], //产品列表，如果是直接购买则此数组不为空
 			query: {}, //参数
 			totalCount: 0, //总数量
 			totalMoney: 0, //总金额
@@ -77,7 +78,7 @@ export default {
 		}
 	},
 	onLoad(options) {
-		//console.log(options)
+		console.log(options)
 		that = this;
 		that.query = options;
 		that.loadData();
@@ -90,7 +91,7 @@ export default {
 	},
 	methods: {
 		tempSaveData: function(ids) { //暂存订单数据，用于当修改地址后能正确返回
-			uni.setStorageSync("zsl-onPayData", JSON.stringify({ids: ids}));
+			uni.setStorageSync("zsl-onPayData", JSON.stringify(that.query));
 		},
 		loadData: function() {
 			this.$request.get("miniOrdersService.onPay", this.query).then((res)=> {
@@ -98,6 +99,8 @@ export default {
 				that.basketList = res.basketList;
 				that.specsList = res.specsList;
 				that.address = res.address;
+				that.productList = res.productList;
+				that.$refs.proComponent.initData(res.productList);
 				//that.buildCount(); //先
 				that.rebuidCouponList(res.couponList);
 			});
@@ -109,19 +112,20 @@ export default {
 			const address = that.address;
 			const remark = that.remark;
 			const coupon = that.curCoupon;
-			const basketList = that.basketList;
+			const productList = that.productList;
 			if(!address || !address.id) {
 				uni.showToast({
 					title:"请先选择收货地址", icon:"none"
 				})
-			} else if(basketList.length<=0) {
+			} else if(productList.length<=0) {
 				uni.showToast({
 					title:"没有任何产品", icon:"none"
 				})
 			}
 			let basketData = "_";
-			basketList.map((item)=> {
-				basketData += (item.id+"-"+item.amount+"_");
+			productList.map((item)=> {
+				//console.log(item)
+				basketData += (item.proId+"-"+item.specsId+"-"+item.amount+"_");
 			});
 			
 			const data = {
@@ -141,8 +145,8 @@ export default {
 			that.couponList = couponList.concat(data);
 			if(data.length>0) { //如果有优惠券，默认使用第一个
 				that.curCoupon = data[0];
-				that.rebuildMoney(); //设置优惠券后，需要重新统计总金额
 			}
+			that.rebuildMoney(); //设置优惠券后，需要重新统计总金额
 			//console.log(that.couponList);
 		},
 		selectAddress: function() { //重新选择地址
@@ -152,7 +156,8 @@ export default {
 		},
 		buildCount: function() { //统计数量
 			let totalCount = 0, totalMoney=0;
-			that.basketList.map((item)=> {
+			that.productList.map((item)=> {
+				//console.log(item)
 				totalCount += (item.amount);
 				totalMoney += (item.amount * item.price);
 			});
@@ -187,6 +192,17 @@ export default {
 			totalMoney -= curCoupon.worth;
 			that.totalMoney = totalMoney;
 			//console.log(that.totalMoney)
+		},
+		changeAmount: function(obj) {
+			let data = [];
+			this.productList.map((item)=> {
+				if(item.key===obj.key) {
+					item.amount = obj.amount;
+				}
+				data.push(item);
+			});
+			this.productLisst = data;
+			this.rebuildMoney();  //重新计算金额
 		},
 	},
 	components: {

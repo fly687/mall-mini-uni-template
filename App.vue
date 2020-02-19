@@ -2,7 +2,7 @@
 import tools from "@/common/tools.js";
 export default {
 	onLaunch: function(options) {
-		console.log('App Launch')
+		console.log('App Launch', options);
 		/* uni.showModal({
 			title: '系统提示',
 			content: JSON.stringify(options)

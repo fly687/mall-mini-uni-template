@@ -184,7 +184,7 @@ export default {
 				let idStr = "_";
 				selectedBasket.map((item)=> {idStr += (item.id+"_");});
 				uni.navigateTo({
-					url: "../orders/onPay?ids="+idStr
+					url: "../orders/onPay?ids="+idStr+"&type=basket"
 				})
 			}
 		},

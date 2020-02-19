@@ -170,7 +170,8 @@
 	        }, {
 	            "name": "onPay", //模式名称
 	            "path": "pages/orders/onPay", //启动页面，必选
-	            "query": "ids=_12_11_&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
+	            "query": "ids=_12_11_&type=basket&autoplay=false" //启动参数，在页面的onLoad函数里面得到。
+				// "query":"ids=91&type=direct"
 	        }, {
 	            "name": "address", //模式名称
 	            "path": "pages/my/address", //启动页面，必选

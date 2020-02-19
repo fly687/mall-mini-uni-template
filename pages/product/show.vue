@@ -21,6 +21,9 @@
 					<view class="grace-flex1">销量：{{product.saleCount+product.defaultSale}}</view>
 					<view class="">产地：{{product.provinceName}}{{product.cityName}}{{product.countyName}}</view>
 				</view>
+				<view class="advance-remark-view" v-if="product.saleMode==='2' && product.deliveryDate">
+					预计发货时间：{{product.deliveryDate}}
+				</view>
 				<view class="choice-view grace-nowrap" @tap="showSpecsDialog">
 					<view class="label">选择规格</view>
 					<view class="choice-content grace-flex1">{{curSpecs?(curSpecs.name+"-￥"+curSpecs.price):"请选择规格"}}</view>
@@ -136,7 +139,11 @@
 					that.showSpecs = true;
 				} else {
 					if("buy"===action) {
-						
+						console.log(specs, pro)
+						// const idStr = "_"+specs.id+"_"; //生成
+						uni.navigateTo({
+							url: "../orders/onPay?ids="+specs.id+"&type=direct"
+						})
 					} else {
 						const obj = {proId: pro.id, proTitle: pro.title, proImg: pro.headImgUrl, amount: 1,
 							specsId: specs.id, specsName: specs.name, price: specs.price, oriPrice: specs.oriPrice};
@@ -214,8 +221,13 @@
 	background:#259B24; padding: 3px 6px;
 }
 .advance-product {
-	background:#FD9704;
+	background:#FD9704; padding: 3px 6px;
 }
+
+.advance-remark-view {
+	padding: 8px; border-top: 1px #efefef solid; color:#999;
+}
+
 .product-title {font-size: 16px; margin-left: 5px; color:#333; line-height: 28px; padding: 3px 0px;}
 .product-info {
 	margin:8px 8px; color:#aaa;

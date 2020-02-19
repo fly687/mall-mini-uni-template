@@ -56,6 +56,9 @@ request.get = (apiCode, params, options) => {
 	
 	const curCustom = uni.getStorageSync(config.CUR_CUSTOM);
 	
+	//const launch = wx.getLaunchOptionsSync();
+	//console.log("--->", launch)
+	
 	//console.log(curCustom);
 	if(!curCustom && common.needUserCheck(apiCode)) { //如果没有用户信息,则跳转到获取用户基本信息页面
 		common.gotoUserPage();

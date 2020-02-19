@@ -1,6 +1,6 @@
 <template>
 	<view class="product-view">
-		<view class="single-product-view grace-nowrap" v-for="(item, index) in basketList" :key="index">
+		<view class="single-product-view grace-nowrap" v-for="(item, index) in data" :key="index">
 			<view class="pro-img">
 				<image :src="item.proImg" class="grace-shoppingcard-goods-image" mode="widthFix"></image>
 			</view>
@@ -10,27 +10,56 @@
 			</view>
 			<view class="pro-price">
 				<view class="price">￥{{item.price}}</view>
-				<view class="count">x {{item.amount}}</view>
+				<view class="count grace-nowrap"> 
+					<text class="operater-text" @tap="changeAmount(item, item.amount-1)">-</text>
+					<input class="operater-input" disabled="true" :value="item.amount"/>
+					<text class="operater-text" @tap="changeAmount(item, item.amount+1)">+</text>
+				</view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+var that;
 export default {
 	props: {
-		basketList: {
+		productList: {
 			type: Array,
 			default: function() {return [];}
 		},
+		type: {
+			type:String,
+			default: 'basket'
+		}
 	},
 	data() {
 		return {
-			
+			data: [],
 		}
 	},
+	created() {
+		that = this;
+	},
 	methods: {
-		
+		initData: function(productList) {
+			this.data = productList;
+		},
+		changeAmount: function(obj, amount) {
+			//console.log(amount, obj);
+			if(amount>0) {
+				this.rebuildData(obj.key, amount);
+			}
+		}, 
+		rebuildData: function(key, amount) {
+			const data = [];
+			this.data.map((item)=> {
+				if(key===item.key) {item.amount = amount;}
+				data.push(item);
+			});
+			that.$emit("changeAmount", {key:key, amount:amount});
+			this.data = data;
+		},
 	}
 }
 </script>
@@ -50,7 +79,7 @@ export default {
 }
 
 .pro-price {
-	width: 60px; text-align: right; color:#999;
+	width: 65px; text-align: right; color:#999;
 }
 .pro-price .price {
 	font-size: 16px; color:#666; padding-bottom: 5px;
@@ -67,5 +96,12 @@ export default {
 }
 .pro-specs-name {
 	width:100%; font-size:14px; color:#aaa; margin-top: 8px;
+}
+
+.operater-input {
+	background:#f8f8f8; border: 1px #e0e0e0 solid; color:#999; border-radius:4px; text-align:center; min-width: 25px; line-height: 14px; font-size: 12px; height: 14px; 
+}
+.operater-text {
+	line-height: 20px; padding: 0px 6px;
 }
 </style>
