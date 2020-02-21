@@ -55,6 +55,7 @@ var that;
 import addressComponent from "./addressComponent.vue";
 import productComponent from "./productComponent.vue";
 import graceBottomDialog from '@/graceUI/components/graceBottomDialog.vue';
+import common from "@/common/common.js";
 export default {
 	data() {
 		return {
@@ -68,6 +69,7 @@ export default {
 			totalCount: 0, //总数量
 			totalMoney: 0, //总金额
 			
+			ordersKey: '', //订单密钥
 			curCoupon: {}, //当前选择的优惠券
 			showCoupon: false, //是否打开优惠券
 			
@@ -84,9 +86,10 @@ export default {
 		that.loadData();
 		that.tempSaveData(options.ids);
 		that.curCoupon = that.buildDefaultCoupon();
+		that.ordersKey = common.getRandomKey();
 	},
 	onUnload() {
-		console.log("on Pay unloaded");
+		//console.log("on Pay unloaded");
 		uni.removeStorageSync("zsl-onPayData");
 	},
 	methods: {
@@ -132,9 +135,14 @@ export default {
 					addressId: address.id,
 					remark: remark,
 					couponId: coupon.id,
-					basketData: basketData,
+					productData: basketData,
+					ordersKey: that.ordersKey, //订单密钥
+					agentId: 0, //对应代理ID
 				}
 				console.log("submitData:::", data);
+				that.$request.get("miniOrdersService.submitOrders", data).then((res)=> {
+					console.log(res);
+				});
 			}
 		},
 		buildDefaultCoupon: function() {
